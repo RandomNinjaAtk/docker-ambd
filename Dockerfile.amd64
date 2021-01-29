@@ -20,6 +20,7 @@ COPY --from=python /root/wheels /root/wheels
 ENV TITLE="Automated MusicBrainz Downloader (AMBD)"
 ENV TITLESHORT="AMD"
 ENV VERSION="0.0.1"
+ENV XDG_CONFIG_HOME="/config/deemix/xdg"
 
 RUN \
 	apk add --no-cache \
