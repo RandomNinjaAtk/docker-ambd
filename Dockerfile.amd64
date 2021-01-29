@@ -48,7 +48,7 @@ RUN \
 	mkdir -p "${XDG_CONFIG_HOME}/deemix"
 
 # copy local files
-COPY root/ /
+#COPY root/ /
 
 WORKDIR /config
 
