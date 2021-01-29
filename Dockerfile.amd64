@@ -9,7 +9,7 @@ RUN \
 		mutagen \
 		r128gain \
 		deemix \
-		beets \
+		https://github.com/beetbox/beets/tarball/master \
 		tidal-dl
 
 FROM ghcr.io/linuxserver/baseimage-alpine:3.12
@@ -42,7 +42,7 @@ RUN \
 		mutagen \
 		r128gain \
 		tidal-dl \
-		beets \
+		https://github.com/beetbox/beets/tarball/master \
 		deemix && \
 	echo "************ setup dl client config directory ************" && \
 	echo "************ make directory ************" && \
