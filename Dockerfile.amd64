@@ -9,6 +9,8 @@ RUN \
 		mutagen \
 		r128gain \
 		deemix \
+		mediafile \
+		confuse \
 		https://github.com/beetbox/beets/tarball/master \
 		tidal-dl
 
@@ -42,6 +44,8 @@ RUN \
 		mutagen \
 		r128gain \
 		tidal-dl \
+		mediafile \
+		confuse \
 		https://github.com/beetbox/beets/tarball/master \
 		deemix && \
 	echo "************ setup dl client config directory ************" && \
