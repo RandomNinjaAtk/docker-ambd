@@ -5,6 +5,8 @@ RUN \
 	echo "*********** install python packages ***********" && \
 	pip install wheel && \
 	pip wheel --wheel-dir=/root/wheels \
+		deprecation \
+		filetype \
 		yq \
 		mutagen \
 		r128gain \
@@ -40,6 +42,8 @@ RUN \
 	pip install \
 		--no-index \
 		--find-links=/root/wheels \
+		deprecation \
+		filetype \
 		yq \
 		mutagen \
 		r128gain \
