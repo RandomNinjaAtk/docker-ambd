@@ -22,8 +22,8 @@ FROM ghcr.io/linuxserver/baseimage-alpine:3.12
 COPY --from=python /root/wheels /root/wheels
 
 ENV TITLE="Automated MusicBrainz Downloader (AMBD)"
-ENV TITLESHORT="AMD"
-ENV VERSION="0.0.2"
+ENV TITLESHORT="AMBD"
+ENV VERSION="0.0.3"
 ENV XDG_CONFIG_HOME="/config/deemix/xdg"
 
 RUN \
