@@ -425,6 +425,7 @@ MoveDownloadedFilesToImportFolder () {
 			sleep 2
 			log "Processing Artist ID :: $artistid :: $albumprocess of $albumidscount :: $sanatizedalbumartistname - $sanatizedalbumname :: Notifying Lidarr to Import..."
 			#NotifyLidarrToImport "$LIBRARYLOCATION/$sanatizedalbumartistname - $sanatizedalbumname (WEB)"
+			PlexNotification "$LIBRARYLOCATION/$sanatizedalbumartistname ($mbrainzalbumartistid)/$sanatizedalbumartistname - ${mbrainzalbumtype^^} - ${mbrainzalbumyear:0:4} - $sanatizedalbumname ($mbrainzalbumid)"
 		else
 			if find "$DOWNLOADLOCATION/temp" -type f -iname "* (Explicit).*" | read; then
 				if find "$LIBRARYLOCATION/$sanatizedalbumartistname ($mbrainzalbumartistid)/$sanatizedalbumartistname - ${mbrainzalbumtype^^} - ${mbrainzalbumyear:0:4} - $sanatizedalbumname ($mbrainzalbumid)" -type f -iname "* (Explicit).*" | read; then
@@ -440,6 +441,7 @@ MoveDownloadedFilesToImportFolder () {
 						sleep 2
 						log "Processing Artist ID :: $artistid :: $albumprocess of $albumidscount :: $sanatizedalbumartistname - $sanatizedalbumname :: Notifying Lidarr to Import..."
 						# NotifyLidarrToImport "$LIBRARYLOCATION/$sanatizedalbumartistname - $sanatizedalbumname (WEB)"
+						PlexNotification "$LIBRARYLOCATION/$sanatizedalbumartistname ($mbrainzalbumartistid)/$sanatizedalbumartistname - ${mbrainzalbumtype^^} - ${mbrainzalbumyear:0:4} - $sanatizedalbumname ($mbrainzalbumid)"
 					fi
 				fi
 			else
