@@ -47,6 +47,24 @@ Configuration () {
 		error=1
 	fi
 
+	if [ "$NOTIFYPLEX" == "true" ]; then
+		log "$TITLESHORT: Plex Library Notification: ENABLED"
+		plexlibraries="$(curl -s "$PLEXURL/library/sections?X-Plex-Token=$PLEXTOKEN" | xq .)"
+		if echo "$plexlibraries" | grep "/downloads-ama" | read; then
+			plexlibrarykey="$(echo "$plexlibraries" | jq -r ".MediaContainer.Directory[] | select(.\"@title\"==\"$PLEXLIBRARYNAME\") | .\"@key\"" | head -n 1)"
+			if [ -z "$plexlibrarykey" ]; then
+				log "ERROR: No Plex Library found named \"$PLEXLIBRARYNAME\""
+				error=1
+			fi
+		else
+			log "ERROR: No Plex Library found containg path \"/downloads-ama\""
+			log "ERROR: Add \"/downloads-ama\" as a folder to a Plex Music Library or Disable NOTIFYPLEX"
+			error=1
+		fi
+	else
+		log "$TITLESHORT: Plex Library Notification: DISABLED"
+	fi
+
 	if [ $error = 1 ]; then
 		log "Please correct errors before attempting to run script again..."
 		log "Exiting..."
@@ -212,6 +230,17 @@ TagFilesWithBeets () {
 			touch /config/logs/downloads/deemix/skipped-$albumid
 		fi
 		rm /config/beets-match
+	fi
+}
+
+
+PlexNotification () {
+
+	if [ "$NOTIFYPLEX" == "true" ]; then
+		plexfolder="$1"
+		plexfolderencoded="$(jq -R -r @uri <<<"${plexfolder}")"
+		curl -s "$PLEXURL/library/sections/$plexlibrarykey/refresh?path=$plexfolderencoded&X-Plex-Token=$PLEXTOKEN"
+		log "$logheader :: Plex Scan notification sent! ($plexfolder)"
 	fi
 }
 
