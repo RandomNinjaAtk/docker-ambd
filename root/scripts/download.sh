@@ -4,7 +4,7 @@ export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 agent="automated-musicbrainz-downloaderr ( https://github.com/RandomNinjaAtk/docker-ambd )"
 DOWNLOADLOCATION=/downloads-ambd
-LIBRARYLOCATION=/library
+LIBRARYLOCATION=/library-ambd
 LIDARR_API_KEY=""
 LIDARR_URL=""
 LIDARR_ROOT_FOLDER=""
@@ -111,13 +111,13 @@ ArtistInfo () {
 
 ArtistDeemixAlbumList () {
 
-	albumcount="$(python3 /config/artist_discograpy.py "$1" | sort -u | wc -l)"
+	albumcount="$(python3 /config/scripts/artist_discograpy.py "$1" | sort -u | wc -l)"
 	if [ -d /config/cache/artists/$1/albums/deezer ]; then
 		cachecount=$(ls /config/cache/artists/$1/albums/deezer/* | wc -l)
 	else
 		cachecount=0
 	fi
-	albumids=($(python3 /config/artist_discograpy.py "$1" | sort -u))
+	albumids=($(python3 /config/scripts/artist_discograpy.py "$1" | sort -u))
 	log "Processing Artist ID :: $artistid :: Searching for All Albums...."
 	log "Processing Artist ID :: $artistid :: $albumcount Albums found!"
 	
@@ -168,7 +168,7 @@ ArtistDeemixAlbumList () {
 
 
 DownloadDeemix () {
-	python3 /config/dlclient.py -b $QUALITY "$1"
+	python3 /config/scripts/dlclient.py -b $QUALITY "$1"
 }
 
 DownloadTDL () {
