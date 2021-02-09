@@ -19,8 +19,8 @@ class cli(deemix):
         self.set.settings["createCDFolder"] = False
         self.set.settings["createAlbumFolder"] = False
         self.set.settings["saveArtworkArtist"] = True
-        self.set.settings["queueConcurrency"] = os.environ.get('DLCONCURRENCY')
-        self.set.settings["jpegImageQuality"] = os.environ.get('JPGQUALITY')
+        self.set.settings["queueConcurrency"] = os.environ.get('CONCURRENT_DOWNLOADS')
+        self.set.settings["jpegImageQuality"] = os.environ.get('EMBEDDED_COVER_QUALITY')
         self.set.settings["embeddedArtworkSize"] = 1200
         self.set.settings["localArtworkSize"] = 1200
         self.set.settings["removeAlbumVersion"] = True
