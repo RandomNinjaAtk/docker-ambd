@@ -191,7 +191,7 @@ TagFilesWithBeets () {
 		fi
 		touch /config/beets-match
 		sleep 0.5
-		beet -c /config/beets-config.yaml -l /config/library.blb -d "$DOWNLOADLOCATION/temp" import -q "$DOWNLOADLOCATION/temp"		
+		beet -c /config/scripts/beets-config.yaml -l /config/library.blb -d "$DOWNLOADLOCATION/temp" import -q "$DOWNLOADLOCATION/temp"		
 		if find $DOWNLOADLOCATION/temp -type f -regex ".*/.*\.\(flac\|opus\|m4a\|mp3\)" -newer "/config/beets-match" | read; then
 			log "Processing Artist ID :: $artistid :: $albumprocess of $albumidscount :: SUCCESS: Matched with beets!"
 			find $DOWNLOADLOCATION/temp -type f -regex ".*/.*\.\(flac\|opus\|m4a\|mp3\)" -not -newer "/config/beets-match" -delete
