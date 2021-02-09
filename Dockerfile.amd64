@@ -23,7 +23,7 @@ COPY --from=python /root/wheels /root/wheels
 
 ENV TITLE="Automated MusicBrainz Downloader (AMBD)"
 ENV TITLESHORT="AMD"
-ENV VERSION="0.0.1"
+ENV VERSION="0.0.2"
 ENV XDG_CONFIG_HOME="/config/deemix/xdg"
 
 RUN \
@@ -57,7 +57,7 @@ RUN \
 	mkdir -p "${XDG_CONFIG_HOME}/deemix"
 
 # copy local files
-#COPY root/ /
+COPY root/ /
 
 WORKDIR /config
 
