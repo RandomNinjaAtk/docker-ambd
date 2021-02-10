@@ -338,6 +338,7 @@ AlbumArtistTagFix () {
 				filename="$(basename "$fname")"
 				eyeD3 "$fname" -b "$1" &> /dev/null
 				eyeD3 "$fname" --user-text-frame='ALBUMARTISTSORT:' &> /dev/null
+				eyeD3 "$fname" --text-frame="TSOP:" &> /dev/null
 				log "Processing Artist ID :: $artistid :: $albumprocess of $albumidscount :: Correcting Album Artist :: $filename fixed..."
 			done
 		fi
