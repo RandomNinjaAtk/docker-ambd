@@ -46,11 +46,19 @@ Configuration () {
 		log "ERROR: ARL_TOKEN setting invalid, currently set to: $ARL_TOKEN"
 		error=1
 	fi
+	
+	if [ -f /config/beets-config.yaml ]; then
+		log "$TITLESHORT: Custom Beets Config detected, using \"/config/beets-config.yaml\""
+		beetconfig=/config/beets-config.yaml
+	else
+		log "$TITLESHORT: Using Default Beets Config. \"/config/scripts/beets-config.yaml\""
+		beetconfig=/config/scripts/beets-config.yaml
+	fi
 
 	if [ "$NOTIFYPLEX" == "true" ]; then
 		log "$TITLESHORT: Plex Library Notification: ENABLED"
 		plexlibraries="$(curl -s "$PLEXURL/library/sections?X-Plex-Token=$PLEXTOKEN" | xq .)"
-		if echo "$plexlibraries" | grep "/downloads-ama" | read; then
+		if echo "$plexlibraries" | grep "$LIBRARYLOCATION" | read; then
 			plexlibrarykey="$(echo "$plexlibraries" | jq -r ".MediaContainer.Directory[] | select(.\"@title\"==\"$PLEXLIBRARYNAME\") | .\"@key\"" | head -n 1)"
 			if [ -z "$plexlibrarykey" ]; then
 				log "ERROR: No Plex Library found named \"$PLEXLIBRARYNAME\""
@@ -58,7 +66,7 @@ Configuration () {
 			fi
 		else
 			log "ERROR: No Plex Library found containg path \"/downloads-ama\""
-			log "ERROR: Add \"/downloads-ama\" as a folder to a Plex Music Library or Disable NOTIFYPLEX"
+			log "ERROR: Add \"$LIBRARYLOCATION\" as a folder to a Plex Music Library or Disable NOTIFYPLEX"
 			error=1
 		fi
 	else
@@ -209,7 +217,7 @@ TagFilesWithBeets () {
 		fi
 		touch /config/beets-match
 		sleep 0.5
-		beet -c /config/scripts/beets-config.yaml -l /config/library.blb -d "$DOWNLOADLOCATION/temp" import -q "$DOWNLOADLOCATION/temp"		
+		beet -c $beetconfig -l /config/library.blb -d "$DOWNLOADLOCATION/temp" import -q "$DOWNLOADLOCATION/temp"		
 		if find $DOWNLOADLOCATION/temp -type f -regex ".*/.*\.\(flac\|opus\|m4a\|mp3\)" -newer "/config/beets-match" | read; then
 			log "Processing Artist ID :: $artistid :: $albumprocess of $albumidscount :: SUCCESS: Matched with beets!"
 			find $DOWNLOADLOCATION/temp -type f -regex ".*/.*\.\(flac\|opus\|m4a\|mp3\)" -not -newer "/config/beets-match" -delete
