@@ -1,0 +1,65 @@
+FROM ghcr.io/linuxserver/baseimage-alpine:3.12 AS python
+
+RUN \
+	apk add build-base python3 python3-dev py3-pip && \
+	echo "*********** install python packages ***********" && \
+	pip install wheel && \
+	pip wheel --wheel-dir=/root/wheels \
+		deprecation \
+		filetype \
+		yq \
+		mutagen \
+		r128gain \
+		deemix \
+		mediafile \
+		confuse \
+		https://github.com/beetbox/beets/tarball/master \
+		tidal-dl
+
+FROM ghcr.io/linuxserver/baseimage-alpine:3.12
+
+# Add Python Wheels
+COPY --from=python /root/wheels /root/wheels
+
+ENV TITLE="Automated MusicBrainz Downloader (AMBD)"
+ENV TITLESHORT="AMBD"
+ENV VERSION="0.0.3"
+ENV XDG_CONFIG_HOME="/config/deemix/xdg"
+
+RUN \
+	apk add --no-cache \
+		bash \
+		ca-certificates \
+		curl \
+		jq \
+		flac \
+		eyed3 \
+		opus-tools \
+		python3 \
+		py3-pip \
+		ffmpeg && \
+	echo "************ install python packages ************" && \
+	pip install \
+		--no-index \
+		--find-links=/root/wheels \
+		deprecation \
+		filetype \
+		yq \
+		mutagen \
+		r128gain \
+		tidal-dl \
+		mediafile \
+		confuse \
+		https://github.com/beetbox/beets/tarball/master \
+		deemix && \
+	echo "************ setup dl client config directory ************" && \
+	echo "************ make directory ************" && \
+	mkdir -p "${XDG_CONFIG_HOME}/deemix"
+
+# copy local files
+COPY root/ /
+
+WORKDIR /config
+
+# ports and volumes
+VOLUME /config
