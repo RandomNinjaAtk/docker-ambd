@@ -1,3 +1,11 @@
+# Deprecated
+
+This repository is now deprecated, will no longer be updated and is being archived. Please visit the new project/replacement:
+* [https://github.com/linuxserver/docker-lidarr-extended](https://github.com/RandomNinjaAtk/docker-lidarr-extended)
+
+<br />
+<br />
+
 # AMBD - Automated MusicBrainz Downloader
 [![Docker Build](https://img.shields.io/docker/cloud/automated/randomninjaatk/ambd?style=flat-square)](https://hub.docker.com/r/randomninjaatk/ambd)
 [![Docker Pulls](https://img.shields.io/docker/pulls/randomninjaatk/ambd?style=flat-square)](https://hub.docker.com/r/randomninjaatk/ambd)
